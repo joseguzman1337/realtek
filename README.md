@@ -14,6 +14,7 @@
 [![ArchLinux](https://img.shields.io/badge/ArchLinux-supported-blue.svg)](https://img.shields.io/badge/ArchLinux-supported-blue.svg)
 [![aircrack-ng](https://img.shields.io/badge/aircrack--ng-supported-blue.svg)](https://github.com/aircrack-ng/aircrack-ng)
 [![wifite2](https://img.shields.io/badge/wifite2-supported-blue.svg)](https://github.com/derv82/wifite2)
+[![macOS](https://img.shields.io/badge/macOS-supported-blue.svg)](https://www.apple.com/macos)
 
 ### Supports Realtek 8811, 8812, 8814 (Alfa 1900) and 8821 chipsets
 
@@ -69,6 +70,55 @@ But for RPI 3 B+ you will need to run those below which builds the ARM64 arch dr
 $ sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
 $ sed -i 's/CONFIG_PLATFORM_ARM64_RPI = n/CONFIG_PLATFORM_ARM64_RPI = y/g' Makefile
 ```
+
+### Installation for macOS
+To install the Realtek drivers on macOS, follow these steps:
+
+1. **Download the Driver Package**: Visit the official repository or the manufacturer's website to download the appropriate driver package for your macOS version.
+
+2. **Install Homebrew** (if not already installed):
+   - Open Terminal and run the following command:
+     ```
+     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     ```
+
+3. **Install Dependencies**:
+   - Use Homebrew to install the necessary dependencies:
+     ```
+     brew install autoconf automake libtool 
+     ```
+
+4. **Build and Install the Driver**:
+   - Navigate to the directory where you downloaded the driver package and run:
+     ```
+     make
+     sudo make install
+     ```
+
+5. **Reboot your Mac**: Restart your Mac to apply the changes and load the new driver.
+
+#### macOS Compatibility Notes:
+- **Supported macOS versions**: macOS 10.14 (Mojave) and later
+- **Apple Silicon Macs (M1/M2/M3)**: This driver may require Rosetta 2 for compatibility
+- **System Integrity Protection (SIP)**: You may need to disable SIP temporarily during installation
+
+#### Troubleshooting for macOS:
+1. **If installation fails**: Check that Xcode Command Line Tools are installed:
+   ```
+   xcode-select --install
+   ```
+
+2. **Permission issues**: Make sure to run installation commands with `sudo`
+
+3. **Driver not loading**: Check system logs for errors:
+   ```
+   sudo dmesg | grep rtl8812au
+   ```
+
+4. **USB device not recognized**: Verify device is detected:
+   ```
+   system_profiler SPUSBDataType | grep -A 10 -i realtek
+   ```
 
 ### Removal of Driver
 In order to remove the driver from your system open a terminal in the directory with the source code and execute the following command:
