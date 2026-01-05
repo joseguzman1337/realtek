@@ -7,3 +7,7 @@ modules.order
 *.mod.c
 .tmp_versions
 .cache.mk
+
+# macOS system files
+.DS_Store
+._*
